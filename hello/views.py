@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .models import Greeting
+from django.contrib.auth.models import User
+
+from hello.serializers import UserSerializer
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 import requests
 
@@ -25,4 +29,8 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, 'db.html', {'greetings': greetings})
+
+class UsersList(ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
